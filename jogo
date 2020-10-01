@@ -1,0 +1,94 @@
+package desafio;
+
+
+import java.util.Arrays;
+
+import javax.swing.JOptionPane;
+
+public class JogoTeste {
+
+	public static void main(String[] args) {
+		int pontos;
+		int qtdRecordeQuebrado=0;
+		int qtdTotalDeJogos;
+		int qtdDeJogosJogados;
+		int somaMaxDaTemporada=0;
+		int somaMinTemporada=0;
+		int somaTotalTemporada;
+		String valor1= JOptionPane.showInputDialog("Informe a quantidade total de jogos que você tera esse ano:");
+		String valor2= JOptionPane.showInputDialog("Informe quantos jogos já foram jogados: ");
+		qtdTotalDeJogos = Integer.parseInt(valor1);
+		qtdDeJogosJogados = Integer.parseInt(valor2);
+		int[] pontuacao = new int[qtdTotalDeJogos];
+		int[] minDaTemporada =new int[qtdTotalDeJogos];
+		int[] maxDaTemporada =new int[qtdTotalDeJogos];
+		int[] recordeMin =new int[qtdTotalDeJogos];
+		int[] recordeMax =new int[qtdTotalDeJogos];
+		for(int i =0; i<qtdDeJogosJogados;i++) {
+			String valorPontuacao= JOptionPane.showInputDialog("Informe a pontuação do " + i + 1 + "Jogo jogado");
+			pontuacao [i]= Integer.parseInt(valorPontuacao);
+			pontos =Integer.parseInt(valorPontuacao);
+			if(i==0) {
+				minDaTemporada[i]=Integer.parseInt(valorPontuacao);
+				maxDaTemporada[i]=Integer.parseInt(valorPontuacao);
+				recordeMin [i]=0;
+				recordeMax[i]=0;
+			} if(pontos < minDaTemporada[-1]) {
+				minDaTemporada[i]= pontos;
+				recordeMin[i]= 1;
+				qtdRecordeQuebrado++;
+			}else {
+				minDaTemporada[i]= minDaTemporada[-1];
+				recordeMin[i]= 0;
+			} if(pontos > maxDaTemporada[-1]) {
+				maxDaTemporada[i]= pontos;
+				recordeMax[i]= 1;
+				qtdRecordeQuebrado++;
+			}else {
+				maxDaTemporada[i]= maxDaTemporada[-1];
+				recordeMax[i]=0;
+			}
+		}
+		
+		String pergunta =JOptionPane.showInputDialog("Gostaria de adicionar um novo jogo?");
+		
+		while(pergunta.equalsIgnoreCase("Sim")) {
+			 qtdDeJogosJogados++;
+			String valorPontuacao= JOptionPane.showInputDialog("Informe a pontuação do " + qtdDeJogosJogados + "Jogo jogado");
+				pontuacao [qtdDeJogosJogados]= Integer.parseInt(valorPontuacao);
+				pontos =Integer.parseInt(valorPontuacao);
+			 if( qtdDeJogosJogados<qtdTotalDeJogos) {
+				 if(pontos < minDaTemporada[-1]) {
+						minDaTemporada[qtdDeJogosJogados]= pontos;
+						recordeMin[qtdDeJogosJogados]= 1;
+						qtdRecordeQuebrado++;
+					}else {
+						minDaTemporada[qtdDeJogosJogados]= minDaTemporada[-1];
+						recordeMin[qtdDeJogosJogados]= 0;
+					} if(pontos > maxDaTemporada[-1]) {
+						maxDaTemporada[qtdDeJogosJogados]= pontos;
+						recordeMax[qtdDeJogosJogados]= 1;
+						qtdRecordeQuebrado++;
+					}else {
+						maxDaTemporada[qtdDeJogosJogados]= maxDaTemporada[-1];
+						recordeMax[qtdDeJogosJogados]=0;
+					}
+			 }
+			
+			pergunta =JOptionPane.showInputDialog("Gostaria de adicionar um novo jogo?");
+		}
+		for(int valor:maxDaTemporada) {
+			somaMaxDaTemporada+=valor;
+			
+		}
+		for (int valor:minDaTemporada) {
+			somaMinTemporada+=valor;
+		}
+		somaTotalTemporada = somaMaxDaTemporada + somaMinTemporada;
+		System.out.println(" A quantidade de recordes quebrado foi " + qtdRecordeQuebrado);
+		System.out.println("A soma da temporada " + somaTotalTemporada);
+		System.out.println(Arrays.toString(pontuacao) + Arrays.toString(minDaTemporada) 
+		+ Arrays.toString(maxDaTemporada)+Arrays.toString(recordeMin)+Arrays.toString(recordeMax));
+		}
+	}
+
